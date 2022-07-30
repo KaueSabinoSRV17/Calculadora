@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <title>Calculadora</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <div class="contatos">
+        <h2>Kauê Sabino</h2>
+        <ul class="d-flex lista">
+            <li><a href=""><img src="linkedin.svg" alt=""> Linkedin</a></li>
+            <li><a href=""><img src="github.svg" alt=""> Github</a></li>
+        </ul>
+    </div>
+    <div class="centered-div">
+        <div class="calculadora">
+            <p id="tela"></p>
+            <div class="teclado">
+                <div class="linha">
+                    <button class="btn c">C</button>
+                    <button class="btn backspace"><</button>
+                    <button class="btn operator">/</button>   
+                    <button class="btn operator">x</button>
+                </div>
+                <div class="linha">
+                    <button class="btn number">1</button>
+                    <button class="btn number">2</button>
+                    <button class="btn number">3</button>
+                    <button class="btn operator">+</button>
+                </div>
+                <div class="linha">
+                    <button class="btn number">4</button>
+                    <button class="btn number">5</button>
+                    <button class="btn number">6</button>
+                    <button class="btn operator">-</button>
+                </div>
+                <div class="teclado-inferior">
+                    <button class="btn number sete">7</button>
+                    <button class="btn number oito">8</button>
+                    <button class="btn number nove">9</button>
+                    <button class="btn igual">=</button>
+                    <button class="btn number zero">0</button>
+                    <button class="btn number ponto">.</button>
+                </div>
+            </div>            
+    </div>
+    <script>
+        // Variáveis e Funções
+            // Elementos DOM
+                let tela = document.querySelector('#tela')
+                let numbers = document.querySelectorAll('.number')
+                let operators = document.querySelectorAll('.operator')
+                let zero = document.querySelector('.zero')
+                let equal = document.querySelector('.igual')
+                let c = document.querySelector('.c')
+                let backspace = document.querySelector('.backspace')
+            // String que vai armazenar toda a operação
+                let operacao = ''
+        // Eventos
+            // Adiciona os números na tela e na operação, e também limpa a tela e a operação caso a ultima operação tenha terminado
+                numbers.forEach((e) => {
+                e.addEventListener('click', () => {
+                        if (operacao.includes('=')) {
+                            tela.innerText = ''
+                            operacao = ''
+                        }
+                        if (
+                            operacao.includes('+') ||
+                            operacao.includes('-') ||
+                            operacao.includes('/') ||
+                            operacao.includes('*')
+                        ) {
+                            tela.innerText = e.innerText
+                        } else {
+                            tela.innerText += e.innerText
+                        }
+                    })
+                })
+            // Adiciona o que estiver na tela a string principal, limpa a tela e adiciona o operador a string principal
+                operators.forEach((e) => {
+                    e.addEventListener('click', () => {
+                        if (e.innerText == 'x') {
+                            operacao += tela.innerText
+                            operacao += '*'
+                        } else {
+                            operacao += tela.innerText
+                            operacao += e.innerText
+                        }
+                    })
+                })          
+            // Calcula a String formada pela tela e a exibe 
+                equal.addEventListener('click', () => {
+                    operacao += tela.innerText
+                    tela.innerText = eval(operacao)
+                    operacao += equal.innerText
+                })
+            // Limpa a Operação e Tela
+                c.addEventListener('click', () => {
+                    tela.innerText = ''
+                    operacao = ''
+                })
+            // Apaga apenas um número da Tela e da Operação
+                backspace.addEventListener('click', () => {
+                    tela.innerText = tela.innerText.substring(0, tela.innerText.length - 1)
+                    operacao = operacao.substring(0, operacao.length - 1)
+                })
+    </script>
+  </body>
+</html>
